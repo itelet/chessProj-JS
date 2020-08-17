@@ -1,0 +1,1 @@
+Chess Game(only client) with plain JS and a little bit of JQuery at the end.
