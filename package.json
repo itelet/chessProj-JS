@@ -5,9 +5,18 @@
   "main": "app.js",
   "dependencies": {
     "mime-types": "^2.1.27",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "mime": ">=1.4.1",
+    "fresh": ">=0.5.2",
+    "debug": ">=2.6.9"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mime-types": "^2.1.27",
+    "socket.io": "^2.3.0",
+    "mime": ">=1.4.1",
+    "fresh": ">=0.5.2",
+    "debug": ">=2.6.9"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
