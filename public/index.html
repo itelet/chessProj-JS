@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>Chess</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body">
+  <div id="main" class="container">
+    <div class="row">
+      <div class="col text-center colors">
+        <h1 class="display-3">Chess by Ádám Szabó</h1>
+      </div>
+    </div>
+    <hr style="height: 1rem; border-width: 0.5rem; border-color:#212529;">
+    <div class="row">
+      <div class="col text-center colors">
+        <h2 class="display-4" style="margin: 1.5rem;">Please enter your name</h2>
+        <div class="mx-auto" style="width:65%;">
+          <input type="text" id="inputField" class="form-control input-lg" placeholder="Name here!">
+        </div>
+        <h2 class="display-4" style="margin: 1.5rem;">Choose the length of the game</h2>
+        <button type="button" class="btn btn-dark btn-dark-outline" onclick="startGame(3)">3 min</button>
+        <button type="button" class="btn btn-dark btn-dark-outline" onclick="startGame(5)">5 min</button>
+        <button type="button" class="btn btn-dark btn-dark-outline" onclick="startGame(10)">10 min</button>
+        <button type="button" class="btn btn-dark btn-dark-outline" onclick="startGame(15)">15 min</button>
+      </div>
+    </div>
+    <hr style="height: 1rem; border-width: 0.5rem; border-color:#212529;">
+    <div class="row">
+      <div class="col">
+        <h2 class="display-4 colors" style="margin:1.5rem;">Public games</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table id="gameTable" class="table table-striped">
+          <thead class="text-center colors">
+            <tr>
+              <th scope="col">Room ID</th>
+              <th scope="col">Challenger's name</th>
+              <th scope="col">Game length</th>
+              <th scope="col">&nbsp</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+  <script>
+    socket = io.connect('http://localhost:3000');
+    
+    socket.on('redirect', function(msg){
+      socket.emit('disconnect');
+      window.location.href = msg;
+    })
+
+
+    function startGame(gameTime) {
+      socket.emit('gameMade', { playerName: document.getElementById('inputField').value, gameLength: gameTime, creator: true });
+    }
+
+    socket.on('gameMadeResponse', function (msg) {
+      console.log(`The player ${msg.playerName} just created a ${msg.gameLength} minute game on Room ID ${msg.roomID}.`);
+      createGame(msg);
+    });
+
+
+
+    socket.on('gameLobbies', function (msg){
+      for(var prop in msg){
+        if (Object.prototype.hasOwnProperty.call(msg, prop)) {
+          
+          var ObjData = msg[prop];
+
+          var format = {
+            roomID: ObjData.roomID,
+            playerName: ObjData.playerName,
+            gameLength: ObjData.gameLength,
+            creator: false
+          }
+          createGame(format);
+        }
+      }
+    });
+
+    socket.on('gameDeleted', function(msg){
+      console.log(msg);
+      deleteGame(msg);
+    });
+
+    socket.on('hey', function(msg){
+      console.log(msg);
+    });
+
+    var table = document.getElementById('gameTable');
+
+    function createGame(msg) {
+      var creator;
+      if (msg.creator == true)
+        creator = `<button type="button" onclick="manualDelete()" class="btn btn-danger btn-danger-outline">Delete game</button>`;
+      else
+        creator = `<button type="button" onclick="joinGame(${msg.roomID})" class="btn btn-dark btn-dark-outline">Join</button>`;
+
+      var row = table.insertRow(-1);
+      var cell1 = row.insertCell(0),
+      cell2 = row.insertCell(1),
+      cell3 = row.insertCell(2),
+      cell4 = row.insertCell(3);
+      cell1.innerHTML = msg.roomID;
+      cell2.innerHTML = msg.playerName;
+      cell3.innerHTML = msg.gameLength + " min";
+      cell4.innerHTML = creator;
+    }
+
+    function joinGame(x){
+      socket.emit('gameJoin', x, document.getElementById('inputField').value)
+    }
+    
+    function manualDelete(){
+      socket.emit('gameDeleted');
+    }
+
+    function deleteGame(id){
+      for(var x = table.rows.length; x > 0 ; x--){
+        if(table.rows[x - 1].cells[0].innerText == id){
+            table.deleteRow(x -1);
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

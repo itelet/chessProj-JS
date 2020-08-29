@@ -1,0 +1,44 @@
+  body{
+    background-color:rgb(79, 85, 88);
+  }
+  .draggablecss {
+    max-width: 100%;
+    max-height: 100%;
+    z-index: 10000;
+  }
+  .colors{
+    color: rgb(211, 207, 201);
+  }
+  .input-lg{
+    background-color: rgb(24, 26, 27);
+  }
+  .text-center2 {
+    size: 5rem;
+    color: white;
+    text-shadow:
+      -1px -1px 0 rgb(255, 255, 255),
+      1px -1px 0 rgb(255, 255, 255),
+      -1px 1px 0 rgb(255, 255, 255),
+      1px 1px 0 rgb(255, 255, 255);
+  }
+
+  table {
+    border: 2px solid;
+      border-top-color: rgb(24, 26, 27);
+      border-right-color: rgb(24, 26, 27);
+      border-bottom-color: rgb(24, 26, 27);
+      border-left-color: rgb(24, 26, 27);
+  }
+
+  .spaces td {
+    background-color: rgb(78, 84, 87);
+    margin: 2px;
+    width: 160px;
+    height: 150px;
+    border: 2px solid;
+  }
+  .btn-dark-outline{
+    background-color: transparent;
+    color: rgb(211, 207, 201);
+    border-width: 0.1rem;
+  }

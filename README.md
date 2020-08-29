@@ -1,1 +1,3 @@
-Chess Game(only client) with plain JS and a little bit of JQuery at the end.
+Multiplayer guest Chess game with plain JS, Jquery, Node.js, socket.io, without any type of registration or cookie saving required.
+
+Still work in progress...

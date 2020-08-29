@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="main.css">
+  <title>Chess</title>
+  <style>
+    .trans {
+      transform: rotate(180deg);
+      -moz-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      -o-transform: rotate(180deg);
+      -webkit-transform: rotate(180deg);
+
+      -moz-transform: scale(1, -1);
+      -webkit-transform: scale(1, -1);
+      -o-transform: scale(1, -1);
+      -ms-transform: scale(1, -1);
+      transform: scale(1, -1);
+    }
+
+    .rotate {
+      -moz-transform: scale(1, -1);
+      -webkit-transform: scale(1, -1);
+      -o-transform: scale(1, -1);
+      -ms-transform: scale(1, -1);
+      transform: scale(1, -1);
+    }
+  </style>
+</head>
+
+<body onload="createGame()">
+  <div id="main" class="container">
+    <table id="spaces" class="spaces">
+      <div class="col" style="background-color: black;">
+        <h2 style="color:white">
+          <span id="player0">White's time: </span><span id="player0clock">Move a piece to start the timer!</span>
+        </h2>
+      </div>
+      <div class="col" style="background-color: white;">
+        <h2 style="color:black">
+          <span id="player1">Black's time: </span><span id="player1clock"></span>
+        </h2>
+      </div>
+      <tr>
+        <td class="drop">
+          <img src="chessSrc/blackRook.png" class="draggablecss" draggable="true" title="211">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackKnight.png" class="draggablecss" draggable="true" title="311">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackBishop.png" class="draggablecss" draggable="true" title="411">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackQueen.png" class="draggablecss" draggable="true" title="511">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackKing.png" class="draggablecss" draggable="true" title="611">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackBishop.png" class="draggablecss" draggable="true" title="412">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackKnight.png" class="draggablecss" draggable="true" title="312">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackRook.png" class="draggablecss" draggable="true" title="212">
+        </td>
+      </tr>
+      <tr>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="110">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="111">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="112">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="113">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="114">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="115">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="116">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/blackPawn.png" class="draggablecss" draggable="true" title="117">
+        </td>
+      </tr>
+      <tr>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+      </tr>
+      <tr>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+      </tr>
+      <tr>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+      </tr>
+      <tr>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+        <td class="drop"></td>
+      </tr>
+      <tr>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="100">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="101">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="102">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="103">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="104">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="105">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="106">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whitePawn.png" class="draggablecss" draggable="true" title="107">
+        </td>
+      </tr>
+      <tr>
+        <td class="drop">
+          <img src="chessSrc/whiteRook.png" class="draggablecss" draggable="true" title="201">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteKnight.png" class="draggablecss" draggable="true" title="301">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteBishop.png" class="draggablecss" draggable="true" title="401">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteQueen.png" class="draggablecss" draggable="true" title="501">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteKing.png" class="draggablecss" draggable="true" title="601">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteBishop.png" class="draggablecss" draggable="true" title="402">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteKnight.png" class="draggablecss" draggable="true" title="302">
+        </td>
+        <td class="drop">
+          <img src="chessSrc/whiteRook.png" class="draggablecss" draggable="true" title="202">
+        </td>
+      </tr>
+    </table>
+  </div>
+  </script>
+  <script type="text/javascript" src="main.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+
+  <script>
+
+    socket = io.connect('http://localhost:3000');
+
+    socket.on('checkURL', function () {
+      socket.emit('sendURL', window.location.pathname);
+      socket.emit('playerNamesServer');
+      socket.emit('changeBoard');
+    });
+
+    socket.on('playerNamesClient', function(player1name, player2name, isitrotated){
+      $('#player0').text(player1name + " (White's time):");
+      $('#player1').text(player2name + " (Black's time):");
+      if(isitrotated){
+        $('#spaces').addClass('rotate');
+        $('.drop').children().addClass('trans');
+      }
+    })
+
+    let dragNum;
+    let dropNum;
+
+    let currentdrop;
+    items = document.querySelectorAll('.draggablecss');
+    drops = document.querySelectorAll('.drop');
+    let draggedItem = null;
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      item.addEventListener('dragstart', function (e) {
+        draggedItem = item;
+        dragNum = i;
+        setTimeout(function () {
+          item.style.display = 'none';
+        });
+      });
+
+      item.addEventListener('dragend', function () {
+        setTimeout(function () {
+          draggedItem.style.display = 'block';
+          draggedItem = null;
+        }, 0);
+      });
+      for (let j = 0; j < drops.length; j++) {
+        const drop = drops[j];
+        drop.addEventListener('dragover', function (e) {
+          e.preventDefault();
+        });
+        drop.addEventListener('dragenter', function (e) {
+          e.preventDefault();
+        });
+        drop.addEventListener('drop', function (e) { // listening to the drop of the element that's being dragged
+          if (e != currentdrop) {
+            currentdrop = e;
+            console.log("Data sent to server!");
+            dropNum = j;
+            socket.emit('pieceMovement', draggedItem.title, Math.floor(j % 8), Math.floor(j / 8), dragNum, dropNum);
+          }
+        });
+      }
+    }
+
+
+    socket.on('result', function (dragNum, dropNum, capture) {
+      if (capture != null || capture != "") {
+        for (var element of items) {
+          if (element.title == capture) {
+            element.remove();
+            break;
+          }
+        }
+      }
+      drops[dropNum].append(items[dragNum]);
+    });
+  </script>
+</body>
+
+
+</html>
